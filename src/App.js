@@ -16,6 +16,7 @@ async function translateTo(lang, text) {
 
 function App() {
     const [targetLanguage, setTargetLanguage] = useState("hy");
+    const [translatableText, setTranslatableText] = useState("");
     const [translation, setTranslation] = useState("");
 
     async function handleTranslation(targetLanguage, text) {
@@ -24,6 +25,8 @@ function App() {
             setTranslation(result);
         } catch {
             setTranslation(text);
+        } finally {
+            setTranslatableText(text);
         }
     }
 
@@ -37,7 +40,7 @@ function App() {
 
     function handleSwitchingLanguages(e) {
         setTargetLanguage(e.target.value);
-        handleTranslation(e.target.value, document.querySelector(".from").value);
+        handleTranslation(e.target.value, translatableText);
     }
 
     return (
