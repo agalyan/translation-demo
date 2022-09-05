@@ -6,6 +6,7 @@ import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Form from 'react-bootstrap/Form';
+import languages from './langs.js'
 
 async function translateTo(lang, text) {
     translate.engine = "google";
@@ -14,7 +15,7 @@ async function translateTo(lang, text) {
 }
 
 function App() {
-    const [targetLanguage, setTargetLanguage] = useState("en");
+    const [targetLanguage, setTargetLanguage] = useState("hy");
     const [translation, setTranslation] = useState("");
 
     async function handleTranslation(targetLanguage, text) {
@@ -26,30 +27,32 @@ function App() {
         }
     }
 
+    function drawLanguageOptions() {
+        return languages.map((language) => <option key={language.name} value={language.code}> {language.name} </option>);
+    }
+
+    function translateToTargetLanguage(e) {
+        handleTranslation(targetLanguage, e.target.value);
+    }
+
+    function handleSwitchingLanguages(e) {
+        setTargetLanguage(e.target.value);
+        handleTranslation(e.target.value, document.querySelector(".from").value);
+    }
+
     return (
         <Container>
             <Row>
                 <Col xs={{ span: 6, offset: 6 }}>
-                    <Form.Select aria-label="Default select example" className={"lang-list"} onChange={(e) => {
-                        setTargetLanguage(e.target.value);
-                        handleTranslation(e.target.value, document.querySelector(".from").value);
-                    }}>
-                        <option value="en">English</option>
-                        <option value="hy">Armenian</option>
-                        <option value="fr">French</option>
-                        <option value="de">German</option>
-                        <option value="pt">Portuguese</option>
-                        <option value="ru">Russian</option>
-                        <option value="es">Spanish</option>
+                    <Form.Select aria-label="Default select example" className={"lang-list"} onChange={handleSwitchingLanguages}>
+                        {drawLanguageOptions()}
                     </Form.Select>
                 </Col>
             </Row>
 
             <Row>
                 <Col xs={6}>
-                    <textarea name="" className="from" onChange={(e) => {
-                        handleTranslation(targetLanguage, e.target.value);
-                    }}></textarea>
+                    <textarea name="" className="from" onChange={translateToTargetLanguage}></textarea>
                 </Col>
 
                 <Col xs={6}>
