@@ -6,12 +6,29 @@ import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Form from 'react-bootstrap/Form';
-import languages from './langs.js'
+import languages from './langs.js';
+import LanguageDetect from 'languagedetect';
+
+function detectLanguageCode(text) {
+    const lngDetector = new LanguageDetect();
+
+    try {
+        const mostPossibleLanguage = lngDetector.detect(text, 1);
+        let langName = mostPossibleLanguage[0][0];
+        let langObj = languages.find(obj => {
+            return obj.name.toLowerCase() === langName;
+        });
+        
+        return langObj.code;
+    } catch {
+        return "en";
+    }
+}
 
 async function translateTo(lang, text) {
     translate.engine = "google";
 
-    return await translate(text, { from: "en", to: lang });
+    return await translate(text, { from: detectLanguageCode(text), to: lang });
 }
 
 function App() {
