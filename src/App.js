@@ -15,7 +15,7 @@ async function translateTo(lang, text) {
 }
 
 function App() {
-    const [targetLanguage, setTargetLanguage] = useState("hy");
+    const [targetLanguage, setTargetLanguage] = useState("es");
     const [translatableText, setTranslatableText] = useState("");
     const [translation, setTranslation] = useState("");
 
