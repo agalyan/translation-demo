@@ -1,5 +1,9 @@
 let languages = [
     {
+        "code": "es",
+        "name": "Spanish"
+    },
+    {
         "code": "hy",
         "name": "Armenian"
     },
@@ -22,10 +26,6 @@ let languages = [
     {
         "code": "ru",
         "name": "Russian"
-    },
-    {
-        "code": "es",
-        "name": "Spanish"
     }
 ];
 
