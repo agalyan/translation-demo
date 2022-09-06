@@ -9,15 +9,17 @@ import Form from 'react-bootstrap/Form';
 import languages from './langs.js';
 import LanguageDetect from 'languagedetect';
 
+function getLanguageObj(langName) {
+    return obj => obj.name.toLowerCase() === langName;
+}
+
 function detectLanguageCode(text) {
     const lngDetector = new LanguageDetect();
 
     try {
         const mostPossibleLanguage = lngDetector.detect(text, 1);
         let langName = mostPossibleLanguage[0][0];
-        let langObj = languages.find(obj => {
-            return obj.name.toLowerCase() === langName;
-        });
+        let langObj = languages.find(getLanguageObj(langName));
         
         return langObj.code;
     } catch {
